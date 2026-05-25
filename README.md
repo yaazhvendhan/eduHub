@@ -95,6 +95,8 @@ Environment-specific configurations can be introduced using Spring profiles as t
 * Project initialized
 * Base configuration in place
 * Hello World printed
+* course service created
+* material service created
 * No APIs, or business logic implemented
 
 
