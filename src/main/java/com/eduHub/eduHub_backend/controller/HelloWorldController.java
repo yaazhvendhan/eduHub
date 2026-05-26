@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HellowWorldController {
+public class HelloWorldController {
 
     private final Environment environment;
     @Value("${spring.application.name}")
     private String appName;
 
-    public HellowWorldController(Environment environment){
+    public HelloWorldController(Environment environment){
         this.environment = environment;
     }
 
