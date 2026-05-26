@@ -11,48 +11,88 @@
 
 ## Overview
 
-This repository contains the backend service for the EduHub platform.
+EduHub Backend is a Spring Boot-based RESTful service designed as the foundation for an educational platform.
 
-The project is currently in its initial stage and has been bootstrapped using Spring Boot. It provides the base structure and configuration required to build a scalable RESTful backend service.
-
-No business logic or domain-specific features have been implemented yet.
+The project currently focuses on establishing a clean architecture, implementing core REST endpoints, and structuring services for future scalability.
 
 ---
 
 ## Project Setup
 
-The project was generated with the following configuration:
-
-| Property     | Value                     |
-| ------------ | ------------------------- |
-| Group ID     | com.eduHub                |
-| Artifact ID  | eduHub-backend            |
-| Package Name | com.eduHub.eduHub-backend |
-| Java Version | 21                        |
-| Packaging    | JAR                       |
-| Build Tool   | Maven                     |
+| Property     | Value                      |
+|--------------|----------------------------|
+| Group ID     | com.eduHub                 |
+| Artifact ID  | eduHub-backend             |
+| Package Name | com.eduHub.eduHub_backend  |
+| Java Version | 21                         |
+| Packaging    | JAR                        |
+| Build Tool   | Maven                      |
 
 ---
 
 ## Dependencies
 
-Current dependencies included during initialization:
-
-* Spring Web (Spring MVC, embedded Tomcat)
-* Spring Boot DevTools (development-time utilities)
+- Spring Web (Spring MVC, embedded Tomcat)
+- Spring Boot DevTools
 
 ---
 
 ## Project Structure
 
-```id="ybnk4p"
-src/
- ├── main/
- │   ├── java/com/eduHub/eduHub-backend/
- │   └── resources/
- │       └── application.properties
- └── test/
 ```
+.
+├── HELP.md
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+├── README.md
+├── src
+│   ├── main
+│   │   ├── java/com/eduHub/eduHub_backend
+│   │   │   ├── EduHubBackendApplication.java
+│   │   │   ├── component
+│   │   │   │   ├── CourseService.java
+│   │   │   │   ├── MaterialService.java
+│   │   │   │   └── StudentService.java
+│   │   │   └── controller
+│   │   │       ├── CourseController.java
+│   │   │       ├── HelloWorldController.java
+│   │   │       ├── MaterialController.java
+│   │   │       └── StudentController.java
+│   │   └── resources
+│   │       ├── application.properties
+│   │       ├── static/
+│   │       └── templates/
+│   └── test
+│       └── java/com/eduHub/eduHub_backend
+│           └── EduHubBackendApplicationTests.java
+└── target
+    ├── classes/
+    ├── generated-sources/
+    ├── generated-test-sources/
+    ├── maven-status/
+    └── test-classes/
+```
+
+---
+
+## Architecture Overview
+
+The project follows a layered architecture:
+
+### Controller Layer
+Handles incoming HTTP requests and maps them to appropriate service methods.
+
+### Service Layer (Component)
+Contains business logic and data handling.
+
+### Configuration Layer
+Managed using `application.properties`.
+
+### Future Enhancements
+- Repository Layer (database interaction)
+- DTOs & Validation
+- Exception Handling Layer
 
 ---
 
@@ -60,19 +100,19 @@ src/
 
 ### Build
 
-```bash id="2z2l3c"
+```bash
 mvn clean install
 ```
 
 ### Run
 
-```bash id="6l0f3a"
+```bash
 mvn spring-boot:run
 ```
 
-Or run the packaged artifact:
+Or run the packaged JAR:
 
-```bash id="r6lmj7"
+```bash
 java -jar target/eduHub-backend.jar
 ```
 
@@ -82,40 +122,161 @@ java -jar target/eduHub-backend.jar
 
 Default configuration file:
 
-```id="xw9yzt"
+```
 src/main/resources/application.properties
 ```
 
-Environment-specific configurations can be introduced using Spring profiles as the project evolves.
+### Current Configurations
+
+- Server port configured
+- Application name injected using `@Value`
+- Environment variables accessed using `Environment`
+
+---
+
+## API Endpoints
+
+### Hello World
+
+```http
+GET /hello-world
+```
+
+**Response**
+```text
+Hello World
+```
+
+---
+
+### Environment Details
+
+```http
+GET /env
+```
+
+**Response**
+```text
+App Name : <application_name>, Port : <port>
+```
+
+---
+
+### Get Single Student
+
+```http
+GET /student
+```
+
+**Response**
+```json
+{
+  "id": 1,
+  "firstName": "Yaazh",
+  "lastName": "M"
+}
+```
+
+---
+
+### Get All Students
+
+```http
+GET /students
+```
+
+**Response**
+```json
+[
+  { "id": 1, "firstName": "Yaazh", "lastName": "M" },
+  { "id": 2, "firstName": "Saturn", "lastName": "Ring" },
+  { "id": 3, "firstName": "String", "lastName": "Ray" },
+  { "id": 4, "firstName": "John", "lastName": "Snow" }
+]
+```
+
+---
+
+### Get Student Using Path Variables
+
+```http
+GET /{id}/{firstName}/{lastName}
+```
+
+**Example**
+
+```http
+GET /1/Yaazh/M
+```
+
+**Response**
+```json
+{
+  "id": 1,
+  "firstName": "Yaazh",
+  "lastName": "M"
+}
+```
+
+---
+
+### Get Materials
+
+```http
+GET /materials
+```
+
+**Response**
+```text
+No Material Available
+```
 
 ---
 
 ## Current Status
 
-* Project initialized
-* Base configuration in place
-* Hello World printed
-* course service created
-* material service created
-* No APIs, or business logic implemented
+### Core Setup
+- Spring Boot project initialized
+- Maven build configured
+- Application running successfully
 
+### Implemented Features
+- Hello World endpoint
+- Environment variables endpoint
+- Student APIs (single, list, path variables)
+- Material API
+
+### Services
+- CourseService (basic response)
+- MaterialService
+- StudentService (data model + logic)
+
+### Controllers
+- HelloWorldController
+- StudentController
+- MaterialController
+- CourseController (basic setup)
+
+### Code Quality
+- Removed unused code
+- Fixed naming issues
+- Structured package organization
 
 ---
 
 ## Roadmap
 
-This section will be updated as development progresses to include:
+Planned improvements:
 
-* API design and endpoints
-* Database integration
-* Security configuration
-* Observability and monitoring
-* Deployment strategy
+- Introduce database integration (Spring Data JPA)
+- Add validation and exception handling
+- Implement authentication & authorization (Spring Security)
+- Add logging and monitoring
+- Containerization using Docker
+- CI/CD pipeline integration
 
 ---
 
 ## License
 
 To be defined.
-
----
