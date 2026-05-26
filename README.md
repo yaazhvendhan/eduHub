@@ -230,6 +230,27 @@ GET /materials
 ```text
 No Material Available
 ```
+---
+### Get Student Using Query Parameters
+
+```http
+GET /query?id={id}&firstName={firstName}&lastName={lastName}
+```
+
+**Example**
+
+```http
+GET /query?id=1&firstName=Yaazh&lastName=M
+```
+
+**Response**
+```json
+{
+  "id": 1,
+  "firstName": "Yaazh",
+  "lastName": "M"
+}
+```
 
 ---
 
