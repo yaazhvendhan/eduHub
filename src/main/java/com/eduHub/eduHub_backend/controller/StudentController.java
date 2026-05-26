@@ -1,7 +1,6 @@
 package com.eduHub.eduHub_backend.controller;
 
 import com.eduHub.eduHub_backend.component.StudentService;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
