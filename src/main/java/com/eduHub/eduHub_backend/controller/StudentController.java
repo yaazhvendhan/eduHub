@@ -1,6 +1,6 @@
 package com.eduHub.eduHub_backend.controller;
 
-import com.eduHub.eduHub_backend.component.StudentService;
+import com.eduHub.eduHub_backend.model.Student;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,71 +10,76 @@ import java.util.List;
 @RestController
 public class StudentController {
 
+    public List<Student> studentList = new ArrayList<>();
+    public StudentController(){
+        studentList.add(new Student(1,"Yaazh","12345"));
+        studentList.add(new Student(2,"Saturn","54321"));
+        studentList.add(new Student(3,"JSnow","11111"));
+        studentList.add(new Student(4,"Stark","22222"));
+        studentList.add(new Student(5,"Khalese","33333"));
+    }
+
+
     // Returns one Student
     @GetMapping("student")
-    public ResponseEntity<StudentService> getStudent(){
-        StudentService studentService = new StudentService(1,"Yaazh","M");
-        return new ResponseEntity<>(studentService, HttpStatus.OK);
+    public ResponseEntity<Student> getStudent(){
+        Student student = new Student(1,"Yaazh","12345");
+        return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
     // Returns list of Students
     @GetMapping("students")
-    public ResponseEntity<List<StudentService> >getStudents(){
-        List<StudentService> studentServiceList = new ArrayList<>();
-        studentServiceList.add(new StudentService(1,"Yaazh","M"));
-        studentServiceList.add(new StudentService(2,"Saturn","Ring"));
-        studentServiceList.add(new StudentService(3,"String","Ray"));
-        studentServiceList.add(new StudentService(4,"John","Snow"));
-
-        return new ResponseEntity<>(studentServiceList,HttpStatus.OK);
+    public ResponseEntity<List<Student> >getStudents(){
+        return new ResponseEntity<>(studentList,HttpStatus.OK);
     }
 
     // Get Student details using https://localhost:8080/id/firstName/lastName
-    @GetMapping("{id}/{firstName}/{lastName}")
-    public ResponseEntity<StudentService> studentServicePathVariable(@PathVariable("id") int studentId,
-                                             @PathVariable("firstName") String firstName,
-                                             @PathVariable("lastName") String lastName)
-    {
-        StudentService studentService2 = new StudentService(studentId, firstName, lastName);
-        return new ResponseEntity<>(studentService2,HttpStatus.OK);
+    @GetMapping("student/{studentId}/{studentName}/{studentPassword}")
+    public ResponseEntity<Student> studentServicePathVariable(@PathVariable("studentId") int studentId,
+                                                              @PathVariable("studentName") String studentName,
+                                                              @PathVariable("studentPassword")String studentPassword)
+            {
+        Student student2 = new Student(studentId, studentName,studentPassword);
+        return new ResponseEntity<>(student2,HttpStatus.OK);
     }
 
     // Get Student details using http://localhost:8080/query?id=studentId&firstName=firstName&lastName=lastName
     @GetMapping("query")
-    public ResponseEntity<StudentService> studentServiceResponseVariable(@RequestParam int id,
-                                                                         @RequestParam String firstName,
-                                                                         @RequestParam String lastName)
+    public ResponseEntity<Student> studentServiceResponseVariable(@RequestParam int studentId,
+                                                                  @RequestParam String studentName,
+                                                                  @RequestParam String studentPassword)
     {
-        StudentService studentService3 = new StudentService(id, firstName,lastName);
-        return ResponseEntity.ok(studentService3);
+        Student student3 = new Student(studentId,studentName,studentPassword);
+        return ResponseEntity.ok(student3);
     }
 
     // Create a new Student
     @PostMapping("create")
-    public ResponseEntity<StudentService> createStudent(@RequestBody StudentService studentService4){
-        System.out.println(studentService4.getId());
-        System.out.print(studentService4.getFirstName());
-        System.out.println(studentService4.getLastName());
-        return ResponseEntity.ok(studentService4);
+    public ResponseEntity<Student> createStudent(@RequestBody Student student){
+        System.out.println(student.getStudentId());
+        System.out.print(student.getStudentName());
+        System.out.println(student.getStudentPassword());
+        return ResponseEntity.ok(student);
     }
 
     // Update Student
     @PutMapping("update")
-    public ResponseEntity updateStudent(){
+    public ResponseEntity<String> updateStudent(){
         return ResponseEntity.badRequest().body("Response um illa onnu lla poda!");
     }
 
     // Update based on id
     @PutMapping("{id}/update")
-    public ResponseEntity updateStudents(@PathVariable("id") int studentId,
-                                         @RequestBody StudentService studentService5)
+    public ResponseEntity<Student> updateStudents(@PathVariable("id") int studentId,
+                                         @RequestBody Student student5)
     {
-        return ResponseEntity.accepted().body(studentService5);
+//        return ResponseEntity.accepted().body(student5);  .accepted() is for future processing like async operations and not for immediate operations.
+        return ResponseEntity.ok().body(student5);
     }
 
     // Delete Student
-    @DeleteMapping("{id}/delete")
-    public ResponseEntity deleteStudent(@PathVariable("id") int studentId)
+    @DeleteMapping("{studentId}/delete")
+    public ResponseEntity<String > deleteStudent(@PathVariable("studentId") int studentId)
     {
         return ResponseEntity.accepted().body("Data deleted successfully");
     }
