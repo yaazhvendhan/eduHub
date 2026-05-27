@@ -93,6 +93,18 @@ return ResponseEntity.ok(course);
     }
 
 
+    @PutMapping("query/{courseCode}")
+    public String queryCourse(@PathVariable String courseCode) throws Exception{
+        if(courseCode.startsWith("*")){
+            throw new IllegalAccessException("It is having a special Character");
+        }
+        else if (courseCode.startsWith("6")){
+            throw new RuntimeException("Course code cannot start with 6");
+        }
+        return  "Valid Course Code : " + courseCode;
+    }
+
+
 //    // Delete Student (String method)
 //    @DeleteMapping("delete-course/{courseCode}")
 //    public ResponseEntity<String> deleteCourse(@PathVariable("courseCode") int courseCode){

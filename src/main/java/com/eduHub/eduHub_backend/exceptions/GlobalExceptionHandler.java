@@ -24,4 +24,13 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(),HttpStatus.BAD_REQUEST.value(), "IllegalArgument",ex.getMessage(), request.getRequestURI());
         return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleException(Exception ex,
+                                                         HttpServletRequest request){
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(),
+                HttpStatus.METHOD_NOT_ALLOWED.value(),
+                "Exception", ex.getMessage(),request.getRequestURI());
+        return new ResponseEntity<>(errorResponse,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
