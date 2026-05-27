@@ -86,10 +86,22 @@ return ResponseEntity.notFound().build();
     }
 
 
+//    // Delete Student (String method)
+//    @DeleteMapping("delete-course/{courseCode}")
+//    public ResponseEntity<String> deleteCourse(@PathVariable("courseCode") int courseCode){
+//        Course course = courseList.stream().filter(c -> c.getCourseCode().equalsIgnoreCase(code)).findFirst().orElse(null);
+//        courseList.remove(course);
+//        return ResponseEntity.ok("deleted");
+//    }
+
     // Delete Student
-    @DeleteMapping("{courseCode}/delete-course")
-    public ResponseEntity deleteCourse(@PathVariable("courseCode") int courseCode){
-        return ResponseEntity.accepted().body("Data deleted successfully");
+    @DeleteMapping("delete-course/{courseCode}")
+    public ResponseEntity<String> deleteCourse(@PathVariable("courseCode") int courseCode){
+        Course course = courseList.stream().filter(c -> c.getCourseCode()==courseCode).findFirst().orElse(null);
+        courseList.remove(course);
+        return ResponseEntity.ok("deleted");
     }
+
+
 
 }
