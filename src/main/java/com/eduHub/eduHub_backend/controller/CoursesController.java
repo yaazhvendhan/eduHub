@@ -66,18 +66,23 @@ public class CoursesController {
     // Create a new Student
     @PostMapping("create-course")
     public ResponseEntity<Course> createCourse(@RequestBody Course course){
-        System.out.println(course.getCourseCode());
-        System.out.print(course.getSubjectName());
-        System.out.println(course.getCourseCredits());
-        return ResponseEntity.ok(course);
+        courseList.add(course);
+        return new ResponseEntity<>(course, HttpStatus.CREATED);
     }
 
     // Update based on id
     @PutMapping("{courseCode}/update-course")
     public ResponseEntity<Course> updateCourse(@PathVariable("courseCode") int courseCode,
-                                         @RequestBody Course course)
+                                         @RequestBody Course updateCourse)
     {
-        return ResponseEntity.accepted().body(course);
+for(Course course : courseList){
+    if(course.getCourseCode()==courseCode){
+        course.setSubjectName(updateCourse.getSubjectName());
+        course.setCourseCredits(updateCourse.getCourseCredits());
+        return ResponseEntity.ok(course);
+    }
+}
+return ResponseEntity.notFound().build();
     }
 
 
