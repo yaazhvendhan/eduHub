@@ -104,7 +104,7 @@ Managed using `application.properties`.
 mvn clean install
 ```
 
-### Run
+### Run (development)
 
 ```bash
 mvn spring-boot:run
@@ -254,6 +254,96 @@ GET /query?id=1&firstName=Yaazh&lastName=M
 
 ---
 
+### Create Student
+
+```http
+POST /create
+Content-Type: application/json
+```
+
+**Request body**
+```json
+{
+  "id": 5,
+  "firstName": "Durai",
+  "lastName": "Singam"
+}
+```
+
+**Response**
+```json
+{
+  "id": 5,
+  "firstName": "Durai",
+  "lastName": "Singam"
+}
+```
+
+---
+
+### Update Student (generic)
+
+```http
+PUT /update
+```
+
+**Response**
+```text
+Returns 400 Bad Request with a fixed message body.
+```
+
+---
+
+### Update Student by ID
+
+```http
+PUT /{id}/update
+Content-Type: application/json
+```
+
+**Request body**
+```json
+{
+  "firstName": "Updated",
+  "lastName": "Name"
+}
+```
+
+**Response**
+```json
+{
+  "firstName": "Updated",
+  "lastName": "Name"
+}
+```
+
+---
+
+### Delete Student by ID
+
+```http
+DELETE /{id}/delete
+```
+
+**Response**
+```text
+Data deleted successfully  (HTTP 202 Accepted)
+```
+
+---
+
+### Get Course
+
+```http
+GET /course
+```
+
+**Response**
+```text
+<course string from CourseService>
+```
+
+
 ## Current Status
 
 ### Core Setup
@@ -268,15 +358,15 @@ GET /query?id=1&firstName=Yaazh&lastName=M
 - Material API
 
 ### Services
-- CourseService (basic response)
-- MaterialService
-- StudentService (data model + logic)
+- `CourseService` (basic responses)
+- `MaterialService`
+- `StudentService` (in-memory data model + logic)
 
 ### Controllers
-- HelloWorldController
-- StudentController
-- MaterialController
-- CourseController (basic setup)
+- `HelloWorldController`
+- `StudentController`
+- `MaterialController`
+- `CourseController` (basic setup)
 
 ### Code Quality
 - Removed unused code
@@ -285,7 +375,7 @@ GET /query?id=1&firstName=Yaazh&lastName=M
 
 ---
 
-## Roadmap
+### Roadmap
 
 Planned improvements:
 
