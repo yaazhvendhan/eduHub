@@ -1,24 +1,14 @@
 package com.eduHub.eduHub_backend.controller;
 
 import com.eduHub.eduHub_backend.component.StudentService;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class StudentController {
-
-    private final InitializingBean classPathFileSystemWatcher;
-
-    public StudentController(InitializingBean classPathFileSystemWatcher) {
-        this.classPathFileSystemWatcher = classPathFileSystemWatcher;
-    }
 
     // Returns one Student
     @GetMapping("student")
@@ -57,5 +47,35 @@ public class StudentController {
     {
         StudentService studentService3 = new StudentService(id, firstName,lastName);
         return ResponseEntity.ok(studentService3);
+    }
+
+    // Create a new Student
+    @PostMapping("create")
+    public ResponseEntity<StudentService> createStudent(@RequestBody StudentService studentService4){
+        System.out.println(studentService4.getId());
+        System.out.print(studentService4.getFirstName());
+        System.out.println(studentService4.getLastName());
+        return ResponseEntity.ok(studentService4);
+    }
+
+    // Update Student
+    @PutMapping("update")
+    public ResponseEntity updateStudent(){
+        return ResponseEntity.badRequest().body("Response um illa onnu lla poda!");
+    }
+
+    // Update based on id
+    @PutMapping("{id}/update")
+    public ResponseEntity updateStudents(@PathVariable("id") int studentId,
+                                         @RequestBody StudentService studentService5)
+    {
+        return ResponseEntity.accepted().body(studentService5);
+    }
+
+    // Delete Student
+    @DeleteMapping("{id}/delete")
+    public ResponseEntity deleteStudent(@PathVariable("id") int studentId)
+    {
+        return ResponseEntity.accepted().body("Data deleted successfully");
     }
 }
