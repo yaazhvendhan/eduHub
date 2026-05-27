@@ -1,6 +1,5 @@
 package com.eduHub.eduHub_backend.controller;
 
-import com.eduHub.eduHub_backend.component.StudentService;
 import com.eduHub.eduHub_backend.model.Course;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,12 +34,11 @@ public class CoursesController {
                return new ResponseEntity<>(courseList,HttpStatus.OK);
     }
 
-//    // Get using Id
-//    @GetMapping("courses/{courseCode}")
-//    public ResponseEntity<Course> CoursePathVariable(@PathVariable ("courseCode") int courseCode){
-//        Course course = new Course(courseCode);
-//        return new ResponseEntity<>(course,HttpStatus.OK);
-//    }
+    // Get using Id
+    @GetMapping("get-coursecode")
+    public ResponseEntity<Course> getCourse(){
+        return ResponseEntity.ok(courseList.get(0));
+    }
 
     @GetMapping("course-query")
     public ResponseEntity<Course> CourseResponseVariable(@RequestParam int courseCode,
@@ -50,6 +48,20 @@ public class CoursesController {
         Course course = new Course(courseCode, subjectName,courseCredits);
         return ResponseEntity.ok(course);
     }
+
+//    // Get using CourseCode using String
+//    @GetMapping("/get-coursecode/{courseCode}")
+//    public ResponseEntity<Course> getCourse(@PathVariable String courseCode){
+//        return courseList.stream().filter( c->c.getCourseCode().equalsIgnoreCase(courseCode)).findFirst().map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+//    }
+
+
+    // Getting as Query with search/get-course
+//    @GetMapping("/search/get-course")
+//    public ResponseEntity<Course> searchCourse(@RequestParam String courseCode){
+//   return courseList.stream().filter( c->c.getCourseCode().equalsIgnoreCase(courseCode)).findFirst().map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+//   }
+
 
     // Create a new Student
     @PostMapping("create-course")
@@ -62,11 +74,12 @@ public class CoursesController {
 
     // Update based on id
     @PutMapping("{courseCode}/update-course")
-    public ResponseEntity updateCourse(@PathVariable("courseCode") int courseCode,
+    public ResponseEntity<Course> updateCourse(@PathVariable("courseCode") int courseCode,
                                          @RequestBody Course course)
     {
         return ResponseEntity.accepted().body(course);
     }
+
 
     // Delete Student
     @DeleteMapping("{courseCode}/delete-course")

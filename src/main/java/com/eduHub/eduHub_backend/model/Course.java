@@ -1,7 +1,5 @@
 package com.eduHub.eduHub_backend.model;
 
-import org.springframework.stereotype.Component;
-
 public class Course {
     private int courseCode;
     private String subjectName;
