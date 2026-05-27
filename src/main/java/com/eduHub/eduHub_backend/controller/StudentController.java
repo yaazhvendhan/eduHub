@@ -1,5 +1,6 @@
 package com.eduHub.eduHub_backend.controller;
 
+import com.eduHub.eduHub_backend.exceptions.ResourceNotFoundException;
 import com.eduHub.eduHub_backend.model.Student;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,9 +64,14 @@ public class StudentController {
     }
 
     // Update Student
-    @PutMapping("update")
-    public ResponseEntity<String> updateStudent(){
-        return ResponseEntity.badRequest().body("Response um illa onnu lla poda!");
+    @PutMapping("update/{studentId}")
+    public ResponseEntity<Student> updateStudent(@PathVariable int studentId, @RequestBody Student updateStudent) {
+        Student student = studentList.stream().filter( s -> s.getStudentId()==studentId)
+                .findFirst()
+                .orElseThrow(()-> new ResourceNotFoundException("Student","StudentId",String.valueOf(studentId)));
+        student.setStudentName(updateStudent.getStudentName());
+        student.setStudentPassword(updateStudent.getStudentPassword());
+        return ResponseEntity.ok(student);
     }
 
     // Update based on id
