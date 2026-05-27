@@ -1,5 +1,6 @@
 package com.eduHub.eduHub_backend.controller;
 
+import com.eduHub.eduHub_backend.exceptions.ResourceNotFoundException;
 import com.eduHub.eduHub_backend.model.Course;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,14 +76,20 @@ public class CoursesController {
     public ResponseEntity<Course> updateCourse(@PathVariable("courseCode") int courseCode,
                                          @RequestBody Course updateCourse)
     {
-for(Course course : courseList){
-    if(course.getCourseCode()==courseCode){
+//for(Course course : courseList){
+//    if(course.getCourseCode()==courseCode){
+//        course.setSubjectName(updateCourse.getSubjectName());
+//        course.setCourseCredits(updateCourse.getCourseCredits());
+//        return ResponseEntity.ok(course);
+//    }
+//}
+        Course course = courseList.stream().filter(c -> c.getCourseCode()==courseCode)
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Course","CourseCode",String.valueOf(courseCode)));
         course.setSubjectName(updateCourse.getSubjectName());
         course.setCourseCredits(updateCourse.getCourseCredits());
-        return ResponseEntity.ok(course);
-    }
-}
-return ResponseEntity.notFound().build();
+
+return ResponseEntity.ok(course);
     }
 
 
@@ -97,7 +104,9 @@ return ResponseEntity.notFound().build();
     // Delete Student
     @DeleteMapping("delete-course/{courseCode}")
     public ResponseEntity<String> deleteCourse(@PathVariable("courseCode") int courseCode){
-        Course course = courseList.stream().filter(c -> c.getCourseCode()==courseCode).findFirst().orElse(null);
+        Course course = courseList.stream().filter(c -> c.getCourseCode()==courseCode)
+                .findFirst()
+                .orElse(null);
         courseList.remove(course);
         return ResponseEntity.ok("deleted");
     }
