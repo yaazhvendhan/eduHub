@@ -15,7 +15,7 @@ public class PracticeApplication {
         s1.study();
         Student s2 = context.getBean(Student.class);
 
-        System.out.println("age of s1 "+  s1.age +" age of s2 " + s2.age);
+//        System.out.println("age of s1 "+  s1.age +" age of s2 " + s2.age);
     }
 
 }

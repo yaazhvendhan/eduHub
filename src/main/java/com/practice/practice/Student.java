@@ -1,6 +1,7 @@
 package com.practice.practice;
 
  import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.beans.factory.annotation.Qualifier;
  import org.springframework.stereotype.Component;
 
 
@@ -12,9 +13,8 @@ public class Student {
     //Object Injection
 
     //f Filed injection
-    @Autowired  // Created object is injected here in the filed
-            Pen p;
-
+//    @Autowired  // Created object is injected here in the filed
+//            Pen p;
 
     // Constructor injection
 //    Pen p;   -->reference created
@@ -31,10 +31,13 @@ public class Student {
 //        this.p = p;  --> gives tge object to the reference
 //    }
 
+    @Autowired
+    @Qualifier("pen")  // When more than one class is annotated with @Component, use @Primary for first preference, then use @Qualifier
 
+    Writer w;
     public void study(){
         System.out.println("I'm an Engineering Student");
-        p.write();
+        w.write();
     }
 
     public Student (){
