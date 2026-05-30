@@ -12,7 +12,7 @@ public class PracticeApplication {
         ApplicationContext context =  SpringApplication.run(PracticeApplication.class, args);
         Student s1= context.getBean(Student.class);
         s1.age = 19;
-//        s1.study();
+        s1.study();
         Student s2 = context.getBean(Student.class);
 
         System.out.println("age of s1 "+  s1.age +" age of s2 " + s2.age);
