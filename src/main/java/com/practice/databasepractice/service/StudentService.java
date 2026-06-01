@@ -19,7 +19,22 @@ public class StudentService {
         return r.findById(roll).orElse(null);
     }
 
-    public Student addStudentById(int roll, Student std) {
+    public Student addStudentByRoll(int roll, Student std) {
         return r.save(std);
+    }
+
+    public Student updateStudentByRoll(int roll, Student std) {
+        Student stu = r.findById(roll).orElse(null);
+        if(stu==null){
+            throw new RuntimeException("Student Does not Exist") ;
+        }
+        stu.setName(std.getName());
+        stu.setTech(std.getTech());
+        return r.save(stu);
+    }
+
+    public String deleteStudentByRoll(int roll) {
+        r.deleteById(roll);
+        return "Student Deleted Successfully";
     }
 }
