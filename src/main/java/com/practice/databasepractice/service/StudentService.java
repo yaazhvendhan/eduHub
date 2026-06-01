@@ -18,4 +18,8 @@ public class StudentService {
     public Student getStudentByRoll(int roll) {
         return r.findById(roll).orElse(null);
     }
+
+    public Student addStudentById(int roll, Student std) {
+        return r.save(std);
+    }
 }
