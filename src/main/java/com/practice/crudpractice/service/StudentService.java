@@ -3,14 +3,15 @@ package com.practice.crudpractice.service;
 import com.practice.crudpractice.model.Student;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class StudentService {
-    List<Student> studentList = Arrays.asList(new Student(1,"Yaazh","SpringBoot"),
+    List<Student> studentList = new ArrayList<>( Arrays.asList(new Student(1,"Yaazh","SpringBoot"),
             new Student(2,"Saturn","C++"),
-            new Student(3,"Snow","Python")) ;
+            new Student(3,"Snow","Python")) );
     public List<Student> getAllStudent() {
         return studentList;
     }
@@ -29,4 +30,23 @@ public class StudentService {
         }
         return new Student(0,"Student Not Found","Not Found");
     }
+
+    public void addStudent(Student std) {
+        studentList.add(std);
+    }
+
+    public String updateStudent(int roll, Student updatestudent) {
+        for(Student s : studentList){
+            if(s.getRoll_no() == roll){
+                s.setName(updatestudent.getName());
+                s.setTech(updatestudent.getTech());
+                return "Student : " + s.getName() + "Updated Successfully";
+            }
+        }
+        return "Student Not Found";
+    }
+
+
+
+
 }
