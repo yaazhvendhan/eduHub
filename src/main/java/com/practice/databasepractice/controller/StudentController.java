@@ -3,6 +3,7 @@ package com.practice.databasepractice.controller;
 import com.practice.databasepractice.model.Student;
 import com.practice.databasepractice.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,4 +43,30 @@ public class StudentController {
     public String deleteStudentByRoll(@PathVariable("roll") int roll){
         return studentService.deleteStudentByRoll(roll);
     }
+
+    //Custom Functions
+    @GetMapping("/student/custom")
+    public List<Student> getCustomStudent(@Param("gender") String gender,@Param("tech")String tech){
+        return studentService.getCustomStudent(gender,tech);
+    }
+
+    @GetMapping("/student/custom/{tech}")
+    public List<Student> getStudentByTech(@PathVariable String tech){
+        return studentService.getStudentByTech(tech);
+    }
+
+    // Custom Queries
+    @PostMapping("/student/filter")
+    public List<Student> getStudentByGenderAndTech(@Param("gender") String gender,@Param("tech")String tech) {
+        return studentService.getStudentByGenderAndTech(gender, tech);
+    }
+        @PostMapping("student/name")
+        public List<Student> getStudentByStudentName(@Param("name") String name){
+            return studentService.getStudentByName(name);
+
+        }
+
 }
+
+
+
