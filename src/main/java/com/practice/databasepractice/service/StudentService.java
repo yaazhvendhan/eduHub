@@ -19,15 +19,12 @@ public class StudentService {
         return r.findById(roll).orElse(null);
     }
 
-    public Student addStudentByRoll(int roll, Student std) {
-        return r.save(std);
+    public void addStudentByRoll(Student std) {
+        r.save(std);
     }
 
     public Student updateStudentByRoll(int roll, Student std) {
         Student stu = r.findById(roll).orElse(null);
-        if(stu==null){
-            throw new RuntimeException("Student Does not Exist") ;
-        }
         stu.setName(std.getName());
         stu.setTech(std.getTech());
         return r.save(stu);
@@ -36,5 +33,10 @@ public class StudentService {
     public String deleteStudentByRoll(int roll) {
         r.deleteById(roll);
         return "Student Deleted Successfully";
+    }
+
+    public String deleteAllStudents() {
+        r.deleteAll();
+        return "Students Deleted Successfully";
     }
 }

@@ -11,7 +11,6 @@ import java.util.List;
 public class StudentController {
     @Autowired
     StudentService studentService;
-
     @GetMapping("/students")
     public List<Student> getAllStudents(){
         return studentService.getAllStudents();
@@ -22,14 +21,21 @@ public class StudentController {
         return studentService.getStudentByRoll(roll);
     }
 
-    @PostMapping("/student/add-student/{roll}")
-    public Student addStudentByRoll(@PathVariable("roll")int roll, @RequestBody Student std){
-        return studentService.addStudentByRoll(roll,std);
+    @PostMapping("/student/add-student")
+    public String addStudentByRoll(@RequestBody Student std){
+        studentService.addStudentByRoll(std);
+        return "Student Added Successfully";
     }
 
     @PutMapping("/student/update-student/{roll}")
     public Student updateStudentByRoll(@PathVariable("roll")int roll, @RequestBody Student std){
         return studentService.updateStudentByRoll(roll,std);
+    }
+
+
+    @DeleteMapping("/student/delete-all")
+    public String deleteAllStudents(){
+        return studentService.deleteAllStudents();
     }
 
     @DeleteMapping("/student/delete/{roll}")
