@@ -5,6 +5,7 @@ import com.practice.databasepractice.model.Student;
 import com.practice.databasepractice.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
@@ -76,6 +77,12 @@ public class StudentController {
         @PostMapping("student/add")
     public StudentDto addStudentByDto( @Valid @RequestBody StudentDto student){
         return studentService.addStudentByDto(student);
+        }
+
+        @GetMapping("students/page")
+    public Page<Student> getAllStudentsAsPage(@RequestParam("page")int page,
+                                              @RequestParam("size") int size){
+        return studentService.getAllStudentsAsPage(page,size);
         }
 
 }

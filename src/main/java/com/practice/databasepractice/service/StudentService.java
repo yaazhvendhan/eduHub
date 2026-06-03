@@ -5,7 +5,9 @@ import com.practice.databasepractice.model.Student;
 import com.practice.databasepractice.repository.Repo;
 import com.practice.databasepractice.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+=import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -92,5 +94,9 @@ public class StudentService {
         student.setTech(std.getTech());
         student.setEmail(std.getEmail());
         return student;
+    }
+
+    public Page<Student> getAllStudentsAsPage(int page, int size) {
+        return studentRepository.findAll(PageRequest.of(page,size));
     }
 }
