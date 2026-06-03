@@ -14,11 +14,13 @@ import lombok.NoArgsConstructor;
 public class Student {
     @Id
     private int roll;
-    @NotBlank
+    @NotBlank(message = "Name filed is empty, kindly enter the name")
     private  String name;
-    @NotBlank
+    @NotBlank(message = "Gender field is empty, kindly enter the gender")
     private String gender;
-    @NotBlank
+    @NotBlank(message = "Tech filed is empty, kindly enter the tech")
     private  String tech;
+    private String email;
+    private String password;
 
 }

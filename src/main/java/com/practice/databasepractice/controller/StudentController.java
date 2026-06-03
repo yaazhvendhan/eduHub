@@ -1,5 +1,6 @@
 package com.practice.databasepractice.controller;
 
+import com.practice.databasepractice.Dto.StudentDto;
 import com.practice.databasepractice.model.Student;
 import com.practice.databasepractice.service.StudentService;
 import jakarta.validation.Valid;
@@ -18,10 +19,10 @@ public class StudentController {
         return studentService.getAllStudents();
     }
 
-    @GetMapping("/student/{roll}")
-    public Student getStudentByRoll(@PathVariable("roll") int roll){
-        return studentService.getStudentByRoll(roll);
-    }
+//    @GetMapping("/student/{roll}")
+//    public Student getStudentByRoll(@PathVariable("roll") int roll){
+//        return studentService.getStudentByRoll(roll);
+//    }
 
     @PostMapping("/student/add-student")
     public String addStudentByRoll(@Valid @RequestBody Student std){   //Criteria for @Valid is written in Entity
@@ -65,6 +66,16 @@ public class StudentController {
         public List<Student> getStudentByStudentName(@Param("name") String name){
             return studentService.getStudentByName(name);
 
+        }
+
+        @GetMapping("student/{roll}")
+        public StudentDto getStudentByRollDto(@PathVariable int roll){
+        return studentService.getStudentByRollDto(roll);
+        }
+
+        @PostMapping("student/add")
+    public StudentDto addStudentByDto( @Valid @RequestBody StudentDto student){
+        return studentService.addStudentByDto(student);
         }
 
 }
