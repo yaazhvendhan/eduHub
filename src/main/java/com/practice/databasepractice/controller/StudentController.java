@@ -2,6 +2,7 @@ package com.practice.databasepractice.controller;
 
 import com.practice.databasepractice.model.Student;
 import com.practice.databasepractice.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class StudentController {
     }
 
     @PostMapping("/student/add-student")
-    public String addStudentByRoll(@RequestBody Student std){
+    public String addStudentByRoll(@Valid @RequestBody Student std){   //Criteria for @Valid is written in Entity
         studentService.addStudentByRoll(std);
         return "Student Added Successfully";
     }
