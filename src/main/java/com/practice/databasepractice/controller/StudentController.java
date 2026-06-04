@@ -3,10 +3,13 @@ package com.practice.databasepractice.controller;
 import com.practice.databasepractice.Dto.StudentDto;
 import com.practice.databasepractice.model.Student;
 import com.practice.databasepractice.service.StudentService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +18,18 @@ import java.util.List;
 public class StudentController {
     @Autowired
     StudentService studentService;
+
+    @GetMapping("/")
+    public String home(HttpServletRequest request){
+        return "Home Page. Session Id :  "+ request.getSession().getId();
+    }
+
+
+    @GetMapping("csrf-token")
+    public CsrfToken getCsrfToken(@NotNull HttpServletRequest request){
+        return (CsrfToken) request.getAttribute("_csrf");
+    }
+
     @GetMapping("/students")
     public List<Student> getAllStudents(){
         return studentService.getAllStudents();
